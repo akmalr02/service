@@ -1,5 +1,19 @@
 <x-layouts-home>
     <x-slot:title>{{ $title }}</x-slot:title>
+     {{-- Pesan sukses dan error --}}
+     @if(session('success'))
+     <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
+
+    @if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    @endif
     <div class="container-fluid">
         <!-- Header Section -->
         <div class="text-start mb-3">
@@ -49,13 +63,5 @@
                 @endforeach
             </tbody>
         </table>
-
-        <!-- Tampilkan daftar teknisi -->
-        {{-- <h2 class="mt-5">Daftar Teknisi</h2>
-        <ul>
-            @foreach ($technicians as $technician)
-            <li>{{ $technician->name }}</li>
-            @endforeach
-        </ul> --}}
    
 </x-layouts-home>

@@ -23,7 +23,7 @@
         </div>
     </div>
   
-    @if($services->isEmpty())
+    @if($laporan->isEmpty())
         <p>Tidak ada service yang diajukan.</p>
     @else
         <table class="table table-striped">
@@ -33,21 +33,25 @@
                     <th>Nama</th>
                     <th>Model Laptop</th>
                     <th>Deskripsi Masalah</th>
+                    <th>Keterangan</th>
                     <th>Status</th>
+                    <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($services as $service)
+                @foreach ($laporan as $ref)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $service->user->name }}</td>
-                        <td>{{ $service->laptop_model }}</td>
-                        <td>{{ $service->problem_description }}</td>
-                        <td>{{ $service->status->status_name ?? 'Belum Diproses' }}</td>
+                        <td>{{ $ref->user->name }}</td>
+                        <td>{{ $ref->service->laptop_model }}</td>
+                        <td>{{ $ref->service->problem_description }}</td>
+                        <td>{{ $ref->description}}</td>
+                        <td>{{ $ref->status->status_name ?? 'Belum Diproses' }}</td>
+                        <td><a href="laporan/{{ $ref->id }}/edit" class="btn btn-primary text-decoration-none">Update Tugas</a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     @endif
   </x-layouts-home>
-  

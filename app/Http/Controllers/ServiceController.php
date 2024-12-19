@@ -112,6 +112,35 @@ class ServiceController extends Controller
         // Hapus data dari database
         $service->delete();
 
-        return redirect()->route('service.index')->with('danger', 'Data service berhasil dihapus.');
+        return redirect()->route('homeAuth')->with('danger', 'Data service berhasil dihapus.');
+    }
+
+    public function cancelPayment($id)
+    {
+        $service = Service::findOrFail($id);
+
+        // Periksa apakah status adalah "Penambahan"
+        if ($service->status->status_name !== 'Penambahan') {
+            return response()->json(['success' => false, 'message' => 'Pembatalan hanya dapat dilakukan saat status Penambahan.']);
+        }
+
+        // Periksa apakah sudah dibayar
+        if ($service->is_paid) {
+            return response()->json(['success' => false, 'message' => 'Pembayaran sudah dikonfirmasi, tidak dapat dibatalkan.']);
+        }
+
+        // Mencari status "Completed"
+        $completeStatus = ServiceStatus::where('status_name', 'Completed')->first();
+        if (!$completeStatus) {
+            return redirect()->route('homeAuth')->with('error', 'Status "Completed" tidak ditemukan.');
+        }
+
+        // Perbarui status service menjadi "Completed" dan set pembayaran ke belum dibayar
+        $service->update([
+            'is_paid' => false, // Set kembali ke belum bayar
+            'status_id' => $completeStatus->id, // Perbarui kolom status_id
+        ]);
+
+        return redirect()->route('homeAuth')->with('success', 'Pembayaran berhasil dibatalkan dan status telah diubah menjadi Completed.');
     }
 }

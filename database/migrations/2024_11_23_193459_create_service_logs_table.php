@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('service_id');
             $table->foreignId('user_id');
-            $table->text('log_description');
+            $table->foreignId('status_id');
+            $table->foreignId('technician_id')->constrained('users');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

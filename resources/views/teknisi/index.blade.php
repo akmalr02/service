@@ -34,14 +34,16 @@
                                 {{ ucfirst($service->status_tugas) }}
                             </h6>
                             <p class="card-text">{{ $service->problem_description }}</p>
-                            <a href="progres/{{ $service->id }}" class="btn btn-primary text-decoration-none">View Tiket</a>
-
+                            <a href="progres/{{ $service->id }}" class="btn btn-primary text-decoration-none">View Tugas</a>
                         </div>
                     </div>
                 </div>
             @empty
-                <p class="text-muted">Tidak ada tugas tersedia saat ini.</p>
+                <div class="w-100">
+                    <p class="text-center fw-bold fs-4">Pekerjaan anda kosong silahkan ambil pekerjaan anda!!!</p>
+                </div>
             @endforelse
         </div>
+        
     </div>
 </x-layouts-home>

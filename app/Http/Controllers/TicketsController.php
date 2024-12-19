@@ -15,13 +15,11 @@ class TicketsController extends Controller
     {
         $title = 'Halaman tiket';
         $tickets = Ticket::with(['user', 'technician'])->get();
-        // $technicians = User::where('role', 'teknisi')->get();
         $services = Service::all();
         return view('tickets.index', [
             'title' => $title,
             'tickets' => $tickets,
             'services' => $services,
-            // 'technicians' => $technicians
         ]);
     }
 
@@ -36,57 +34,6 @@ class TicketsController extends Controller
         ]);
     }
 
-    // // Menyimpan tiket baru
-    // public function store(Request $request)
-    // {
-    //     $validated = $request->validate([
-    //         'user_id' => 'required|exists:users,id',
-    //         'payment' => 'boolean',
-    //     ]);
-
-    //     Ticket::create($validated);
-
-    //     return redirect()->route('tickets.index')->with('success', 'Tiket berhasil dibuat.');
-    // }
-
-    // // Menampilkan detail tiket
-    // public function show($id)
-    // {
-    //     $ticket = Ticket::with(['user', 'technician'])->findOrFail($id);
-    //     return view('tickets.show', compact('ticket'));
-    // }
-
-    // // Form untuk mengedit tiket
-    // public function edit($id)
-    // {
-    //     $ticket = Ticket::findOrFail($id);
-    //     $technicians = User::where('role', 'technician')->get(); // Ambil hanya user dengan role "technician"
-    //     return view('tickets.edit', compact('ticket', 'technicians'));
-    // }
-
-    // // Memperbarui tiket
-    // public function update(Request $request, $id)
-    // {
-    //     $validated = $request->validate([
-    //         'payment' => 'boolean',
-    //         'technician_id' => 'nullable|exists:users,id',
-    //     ]);
-
-    //     // Periksa jika technician_id adalah seorang teknisi
-    //     if (isset($validated['technician_id'])) {
-    //         $technician = User::where('id', $validated['technician_id'])->where('role', 'technician')->first();
-    //         if (!$technician) {
-    //             return redirect()->back()->withErrors(['technician_id' => 'ID teknisi tidak valid.']);
-    //         }
-    //     }
-
-    //     $ticket = Ticket::findOrFail($id);
-    //     $ticket->update($validated);
-
-    //     return redirect()->route('tickets.index')->with('success', 'Tiket berhasil diperbarui.');
-    // }
-
-    // Menghapus tiket
     public function destroy($id)
     {
         $ticket = Ticket::findOrFail($id);
@@ -107,7 +54,7 @@ class TicketsController extends Controller
         // Perbarui status service menjadi "Payment Approved"
         $paidStatus = ServiceStatus::where('status_name', 'Payment Approved')->first();
         if (!$paidStatus) {
-            return response()->json(['success' => false, 'message' => 'Status "Payment Approved" tidak ditemukan.']);
+            return redirect()->route('tickets.index')->with('error', 'Status name tidak di temukan');
         }
 
         $service->update([
@@ -115,7 +62,7 @@ class TicketsController extends Controller
             'status_id' => $paidStatus->id, // Perbarui kolom status_id
         ]);
 
-        return redirect()->route('tickets.index')->with(['success' => true, 'message' => 'Pembayaran berhasil dikonfirmasi.']);
+        return redirect()->route('tickets.index')->with('success', 'Pembayaran berhasil dikonfirmasi.');
     }
 
 

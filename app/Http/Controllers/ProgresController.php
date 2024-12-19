@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Service;
 use Illuminate\Http\Request;
+use App\Models\ServiceStatus;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -11,9 +12,20 @@ class ProgresController extends Controller
 {
     public function index()
     {
-        $titel = 'Tugas saya';
+        $titel = 'Pekerjaan saya';
         $teknisi = Auth::id();
-        $services = Service::where('technician_id', $teknisi)->get();
+        // Mendapatkan data status dengan nama "Payment Approved"
+        $status = ServiceStatus::where('status_name', 'In Progress')->first();
+
+        // Cek jika status tidak ditemukan
+        if (!$status) {
+            return back()->with('error', 'Status "Payment Approved" tidak ditemukan.');
+        }
+
+        // Mengambil semua service dengan status yang sesuai
+        $services = Service::where('technician_id', $teknisi)
+            ->where('status_id', $status->id)
+            ->get();
         // dd($servis);
         return view('teknisi.index', [
             'title' => $titel,

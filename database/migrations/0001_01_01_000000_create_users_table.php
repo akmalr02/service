@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('address');
             $table->string('phone_number');
             $table->enum('role', ['admin', 'teknisi', 'user'])->default('user');
-            $table->string('image')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -48,12 +48,16 @@
               Status :
               <span class="badge text-bg-primary rounded-pill">{{ ucfirst($service->status_tugas) }}</span>
             </li>
-            <form action="{{ route('tugas.take', $service->id) }}" method="POST">
+            <a href="{{ route('laporan.create', ['id' => $service->id]) }}" class="btn btn-success m-3">
+              Buat Laporan untuk Service 
+          </a>
+          
+            {{-- <form action="{{ route('tugas.end', $service->id) }}" method="POST">
                 @csrf
                 <button type="submit" class="btn btn-success m-3">
                    Selesai
                 </button>
-            </form>
+            </form> --}}
           </ul>
     </div>
 </x-layouts-home>

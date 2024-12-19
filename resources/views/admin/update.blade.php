@@ -71,19 +71,6 @@
             @enderror
         </div>
 
-        {{-- <div class="col-md-6">
-            <label for="image" class="form-label">Profile Picture</label>
-            <input type="file" class="form-control @error('image') is-invalid @enderror" id="image" name="image" accept="image/*">
-            @error('image')
-                <div class="invalid-feedback">
-                    {{ $message }}
-                </div>
-            @enderror
-            @if (!empty($user->image))
-                <img src="{{ asset('storage/' . $user->image) }}" alt="Current Image" class="img-thumbnail mt-2" width="150">
-            @endif
-        </div> --}}
-
         <!-- Submit Form -->
         <div class="col-12">
             <button class="btn btn-primary" type="submit">Update User</button>

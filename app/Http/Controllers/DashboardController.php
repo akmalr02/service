@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Service;
 use App\Models\ServiceStatus;
+use App\Models\laporan;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
@@ -20,23 +22,21 @@ class DashboardController extends Controller
             'statusOptions' => $statusOptions, // Mengirim statusOptions ke view
         ]);
     }
-    // public function teknisi()
-    // {
-    //     $title = 'Daftar Service user';
-    //     $services = Service::where('status_tugas', 'available')->get();
-    //     return view("dashboard.teknisi", [
-    //         'title' => $title,
-    //         'services' => $services
-    //     ]);
-    // }
+
     public function auth()
     {
         $title = 'Daftar Service Saya';
         $userId = Auth::id(); // Ambil ID user yang sedang login
         $services = Service::where('user_id', $userId)->get(); // Filter data berdasarkan user yang login
+        $serviceIds = $services->pluck('id'); // Ambil semua ID dari layanan
+
+        // Ambil data laporan berdasarkan service_id yang sesuai
+        $laporan = Laporan::whereIn('service_id', $serviceIds)->get();
+
         return view("dashboard.home", [
             'title' => $title,
-            'services' => $services
+            'services' => $services,
+            'laporan' => $laporan
         ]);
     }
 }

@@ -17,6 +17,7 @@ class ServiceStatusSeeder extends Seeder
             ['status_name' => 'Payment Pending', 'description' => 'Awaiting payment confirmation'],
             ['status_name' => 'Payment Approved', 'description' => 'Payment has been confirmed'],
             ['status_name' => 'In Progress', 'description' => 'Service is being worked on'],
+            ['status_name' => 'Penambahan', 'description' => 'penambahan sparepart'],
             ['status_name' => 'Completed', 'description' => 'Service is completed'],
         ]);
     }

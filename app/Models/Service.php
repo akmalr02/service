@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Service extends Model
@@ -33,6 +34,11 @@ class Service extends Model
     public function ticket(): HasOne
     {
         return $this->hasOne(Ticket::class);
+    }
+
+    public function laporan(): HasMany
+    {
+        return $this->hasMany(Laporan::class);
     }
 
     // Event untuk menetapkan nilai default status_id

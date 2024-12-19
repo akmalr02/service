@@ -22,9 +22,9 @@
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('user') ? 'active' : '' }}" href="{{url('user') }}">Pengelola User</a>
                         </li>
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link {{ Request::is('status') ? 'active' : '' }}" href="{{url('status') }}">Status Tiket</a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('tickets') ? 'active' : '' }}" href="{{url('tickets') }}">Status Pembayaran</a>
                         </li>
@@ -32,17 +32,23 @@
                             <a class="nav-link dropdown-toggle {{ Request::is('laporan*') ? 'active' : '' }}" href="#"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">Laporan</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item {{ Request::is('laporan/selesai') ? 'active' : '' }}" href="{{url('laporan.selesai') }}">Selesai</a></li>
-                                <li><a class="dropdown-item {{ Request::is('laporan/pending') ? 'active' : '' }}" href="{{url('laporan.pending') }}">Pending</a></li>
+                                <li><a class="dropdown-item {{ Request::is('laporan') ? 'active' : '' }}" href="{{url('laporan') }}">Semua laporan</a></li>
+                                <li>
+                                    <a class="dropdown-item {{ Request::is('laporan/selesai') ? 'active' : '' }}" 
+                                       href="{{ url('laporan/selesai') }}">
+                                       Selesai
+                                    </a>
+                                </li>
+                                <li><a class="dropdown-item {{ Request::is('laporan/penambahan') ? 'active' : '' }}" href="{{url('laporan/penambahan') }}">Penambahan</a></li>
                             </ul>
                         </li>
                     @elseif(Auth::user()->role === 'teknisi')
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('tasks') ? 'active' : '' }}" href="{{url('progres') }}">Tugas Saya</a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a class="nav-link {{ Request::is('service') ? 'active' : '' }}" href="{{url('service') }}">Services</a>
-                        </li> --}}
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::is('/laporan/byTeknisi') ? 'active' : '' }}" href="{{url('/laporan/byTeknisi') }}">laporan saya</a>
+                        </li>
                     @elseif(Auth::user()->role === 'user')
                         {{-- Tambahkan menu jika diperlukan --}}
                     @endif

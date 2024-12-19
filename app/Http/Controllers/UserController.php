@@ -29,8 +29,6 @@ class UserController extends Controller
      */
     public function create()
     {
-        // dd('halaman create');
-
         $title = 'Create New User';
         // $users = User::all();
         return view('admin.create', [

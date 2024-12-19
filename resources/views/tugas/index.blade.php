@@ -3,15 +3,17 @@
 
     {{-- Pesan sukses dan error --}}
     @if (session('success'))
-        <div class="alert alert-success mb-4">
-            {{ session('success') }}
-        </div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     @endif
 
     @if (session('error'))
-        <div class="alert alert-danger mb-4">
-            {{ session('error') }}
-        </div>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     @endif
 
     <!-- Container untuk konten -->
@@ -34,13 +36,15 @@
                                 {{ ucfirst($service->status_tugas) }}
                             </h6>
                             <p class="card-text">{{ $service->problem_description }}</p>
-                            <a href="tugas/{{ $service->id }}" class="btn btn-primary text-decoration-none">View Tiket</a>
+                            <a href="tugas/{{ $service->id }}" class="btn btn-primary text-decoration-none">View Tugas</a>
 
                         </div>
                     </div>
                 </div>
             @empty
-                <p class="text-muted">Tidak ada tugas tersedia saat ini.</p>
+            <div class="w-100">
+                <p class="text-center fw-bold fs-4">Pekerjaan Tidak tersedia saat ini.</p>
+            </div>
             @endforelse
         </div>
     </div>

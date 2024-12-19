@@ -70,4 +70,31 @@ class TugasController extends Controller
 
         return redirect()->route('tugas.index')->with('error', 'Anda tidak memiliki izin untuk mengambil tugas ini.');
     }
+
+    public function endTask($id)
+    {
+        // Mencari service berdasarkan ID
+        $service = Service::findOrFail($id);
+
+        // Memastikan pengguna yang sedang login adalah teknisi
+        if (Auth::user()->role == 'teknisi') {
+            // Cari ID status "Completed"
+            $completedStatus = ServiceStatus::where('status_name', 'Completed')->first();
+
+            // Pastikan status "Completed" ditemukan
+            if (!$completedStatus) {
+                return redirect()->route('tugas.index')->with('error', 'Status "Completed" tidak ditemukan.');
+            }
+
+            // Perbarui data tugas
+            $service->update([
+                // 'status_tugas' => 'completed',
+                'status_id' => $completedStatus->id,
+            ]);
+
+            return redirect()->route('tugas.index')->with('success', 'Tugas berhasil diselesaikan, silahkan buat laporan anda');
+        }
+
+        return redirect()->route('tugas.index')->with('error', 'Anda tidak memiliki izin untuk menyelesaikan tugas ini.');
+    }
 }

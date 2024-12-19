@@ -1,4 +1,4 @@
 <x-layouts-home>
     <x-slot:title>{{ $title }}</x-slot:title>
-    
-</x-layouts-home>
+    <h1>ini halaman show laporan</h1>
+  </x-layouts-home>
