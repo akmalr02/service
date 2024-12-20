@@ -11,6 +11,9 @@ use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::get('/login', [LoginController::class, 'login'])->middleware('guest');
 Route::post('/login', [LoginController::class, 'authenticate'])->middleware('guest');
@@ -30,7 +33,9 @@ Route::get('tugas/{id}', [TugasController::class, 'show'])->middleware('auth')->
 Route::post('/tugas/{id}/ambil', [TugasController::class, 'takeTask'])->name('tugas.take');
 Route::post('/tugas/{id}/end', [TugasController::class, 'endTask'])->name('tugas.end');
 
-route::resource('progres', ProgresController::class)->middleware('auth');
+route::resource('progres', ProgresController::class)
+    ->only(['index', 'show'])
+    ->middleware('auth');
 
 Route::resource('laporan', LaporanController::class)
     ->except(['show', 'create'])
@@ -64,5 +69,6 @@ Route::get('tickets', [TicketsController::class, 'index'])->middleware('auth')->
 Route::patch('/tickets/{id}/pay', [TicketsController::class, 'pay'])->name('tickets.pay');
 Route::patch('/tickets/{id}/forward-to-technical', [TicketsController::class, 'forwardToTechnical'])->name('tickets.forwardToTechnical');
 
-Route::resource('service', ServiceController::class)->middleware('auth');
+// route untuk user
+Route::resource('service', ServiceController::class)->except(['index'])->middleware('auth');
 Route::post('/service/{id}/cancel', [ServiceController::class, 'cancelPayment'])->name('service.cancel');

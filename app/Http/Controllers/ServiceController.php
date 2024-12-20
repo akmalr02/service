@@ -14,14 +14,7 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        // $title = 'Daftar Service Saya';
-        // $userId = Auth::id(); // Ambil ID user yang sedang login
-        // $services = Service::where('user_id', $userId)->get(); // Filter data berdasarkan user yang login
-
-        // return view('service.index', [
-        //     'title' => $title,
-        //     'services' => $services
-        // ]);
+        // 
     }
 
     /**
