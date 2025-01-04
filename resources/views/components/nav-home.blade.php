@@ -22,9 +22,9 @@
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('user') ? 'active' : '' }}" href="{{url('user') }}">Pengelola User</a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a class="nav-link {{ Request::is('status') ? 'active' : '' }}" href="{{url('status') }}">Status Tiket</a>
-                        </li> --}}
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::is('absensi') ? 'active' : '' }}" href="{{url('absensi') }}">Absen Teknisi</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('tickets') ? 'active' : '' }}" href="{{url('tickets') }}">Status Pembayaran</a>
                         </li>
@@ -32,7 +32,7 @@
                             <a class="nav-link dropdown-toggle {{ Request::is('laporan*') ? 'active' : '' }}" href="#"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">Laporan</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item {{ Request::is('laporan') ? 'active' : '' }}" href="{{url('laporan') }}">Semua laporan</a></li>
+                                <li><a class="dropdown-item {{ Request::is('laporan') ? 'active' : '' }}" href="{{url('laporan') }}">Semua Laporan</a></li>
                                 <li>
                                     <a class="dropdown-item {{ Request::is('laporan/selesai') ? 'active' : '' }}" 
                                        href="{{ url('laporan/selesai') }}">
@@ -48,6 +48,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('/laporan/byTeknisi') ? 'active' : '' }}" href="{{url('/laporan/byTeknisi') }}">laporan saya</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::is('/absensi/create') ? 'active' : '' }}" href="{{url('/absensi/create') }}">absen</a>
                         </li>
                     @elseif(Auth::user()->role === 'user')
                         {{-- Tambahkan menu jika diperlukan --}}

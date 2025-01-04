@@ -58,7 +58,7 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li>
-                                            <form action="{{ route('service.cancel', $service->id) }}" method="POST" class="d-inline">
+                                            <form action="{{ route('service.cancel', $service->id) }}" method="POST" class="d-inline" onsubmit="return confirmDelete()">
                                                 @csrf
                                                 <button type="submit" class="dropdown-item">Batalkan Pembayaran</button>
                                             </form>
@@ -112,11 +112,14 @@
                         
                         <td>
                             <a href="{{ route('service.show', $service->id) }}" class="btn btn-info text-decoration-none">Detail</a>
+                            @if (optional($service->status)->status_name === 'Payment Pending')
                             <form action="{{ route('service.destroy', $service->id) }}" method="POST" class="d-inline" onsubmit="return confirmDelete()">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger border-0">Batalkan</button>
-                            </form>
+                            </form>                                
+                            @endif
+                            
                         </td>
                     </tr>
                 @endforeach

@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UsersTableSeeder::class,
             ServiceStatusSeeder::class,
-            ServiceSeeder::class
+            ServiceSeeder::class,
+            // AbsensiTeknisiSeeder::class,
         ]);
     }
 }

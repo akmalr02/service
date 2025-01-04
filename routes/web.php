@@ -10,6 +10,8 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AbsensiController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -60,6 +62,13 @@ Route::get('/laporan/create/{id}', [LaporanController::class, 'create'])
 Route::post('/laporan/{id}', [LaporanController::class, 'store'])
     ->name('laporan.store')
     ->middleware('auth');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/absensi', [AbsensiController::class, 'index'])->name('absensi.index');
+    Route::get('/absensi/create', [AbsensiController::class, 'create'])->name('absensi.create');
+    Route::post('/absensi', [AbsensiController::class, 'store'])->name('absensi.store');
+    Route::post('/absensi/keluar', [AbsensiController::class, 'absenKeluar'])->name('absensi.keluar');
+});
 
 // route untuk admin
 Route::resource('user', UserController::class)->middleware('auth');

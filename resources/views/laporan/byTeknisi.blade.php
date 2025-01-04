@@ -47,7 +47,6 @@
                         <td>{{ $ref->service->problem_description }}</td>
                         <td>{{ $ref->description}}</td>
                         <td>{{ $ref->status->status_name ?? 'Belum Diproses' }}</td>
-                        {{-- <td><a href="laporan/{{ $ref->id }}/edit" class="btn btn-primary text-decoration-none">Update Tugas</a> --}}
                         </td>
                     </tr>
                 @endforeach
