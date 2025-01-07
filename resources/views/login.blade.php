@@ -19,7 +19,7 @@
             </div>
         @endif
             <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px; border-radius: 15px;">
-                <h1 class="text-center mb-4">Sing In</h1>
+                <h1 class="text-center mb-4">Sign In</h1>
 
                 <!-- Notifikasi Error -->
                 @if (session('signInError'))

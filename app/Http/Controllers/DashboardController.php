@@ -39,4 +39,24 @@ class DashboardController extends Controller
             'laporan' => $laporan
         ]);
     }
+
+    public function about()
+    {
+        $title = 'about';
+       
+        return view('about', [
+            'title' => $title,
+        ]);
+    }
+
+    public function more()
+    {
+        $title = 'more';
+       
+        return view('more', [
+            'title' => $title,
+        ]);
+    }
+
+
 }

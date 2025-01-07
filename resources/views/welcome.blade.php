@@ -7,8 +7,8 @@
     <h2>PT. Bee Creative Solutions</h2>
     <p>Synergy in Action, Success in Partnership.</p>
     <div>
-      <a href="#" class="btn btn-dark btn-custom">About Us</a>
-      <a href="#" class="btn btn-outline-light btn-custom">More Info</a>
+      <a href="about" class="btn btn-dark btn-custom">About Us</a>
+      <a href="more" class="btn btn-outline-light btn-custom">More Info</a>
     </div>
   </div>
 </x-layouts-welcome>

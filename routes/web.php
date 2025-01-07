@@ -27,6 +27,8 @@ Route::post('/registrasi', [RegisterController::class, 'store'])->name('register
 //route dashboard
 Route::get('homeAdmin', [DashboardController::class, 'admin'])->middleware('auth')->name('homeAdmin');
 Route::get('homeAuth', [DashboardController::class, 'auth'])->middleware('auth')->name('homeAuth');
+Route::get('about', [DashboardController::class, 'about'])->middleware('guest')->name('about');
+Route::get('more', [DashboardController::class, 'more'])->middleware('guest')->name('more');
 
 //route untuk teknisi
 Route::get('tugas', [TugasController::class, 'teknisi'])->middleware('auth')->name('tugas.index');
