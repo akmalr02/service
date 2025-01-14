@@ -80,6 +80,8 @@ Route::get('tickets', [TicketsController::class, 'index'])->middleware('auth')->
 Route::patch('/tickets/{id}/pay', [TicketsController::class, 'pay'])->name('tickets.pay');
 Route::patch('/tickets/{id}/forward-to-technical', [TicketsController::class, 'forwardToTechnical'])->name('tickets.forwardToTechnical');
 
+Route::get('/laporan/download-pdf', [LaporanController::class, 'downloadPdf'])->name('laporan.downloadPdf');
+
 // route untuk user
 Route::resource('service', ServiceController::class)->except(['index'])->middleware('auth');
 Route::post('/service/{id}/cancel', [ServiceController::class, 'cancelPayment'])->name('service.cancel');

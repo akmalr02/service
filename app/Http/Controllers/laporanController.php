@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Laporan;
 use App\Models\Service;
 use App\Models\ServiceStatus;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use PDF;
 
 class LaporanController extends Controller
 {
@@ -196,4 +199,34 @@ class LaporanController extends Controller
         return redirect()->route('laporan.index')
             ->with('success', 'Laporan berhasil dihapus.');
     }
+
+    public function downloadPdf()
+{
+    // Ambil data laporan
+    $laporan = Laporan::with(['user', 'service', 'status'])->get();
+
+    // Jalur absolut untuk logo
+    $logoPath = public_path('img/logo.png');
+    
+    // Generate tampilan HTML untuk PDF
+    $html = view('laporan.pdf', compact('laporan', 'logoPath'))->render();
+
+    // Set opsi DomPDF
+    $options = new Options();
+    $options->set('defaultFont', 'Arial');
+    $options->set('isHtml5ParserEnabled', true); 
+    $options->set('isRemoteEnabled', true); 
+
+    $dompdf = new Dompdf($options);
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'portrait'); // Ukuran dan orientasi kertas
+    header('Content-Type: application/pdf');
+    $dompdf->render();
+
+    // Unduh file PDF secara langsung
+    return $dompdf->stream('laporan.pdf', ['Attachment' => true]);
+}
+
+
+
 }

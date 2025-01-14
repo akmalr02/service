@@ -1,18 +1,18 @@
 <x-layouts-home>
     <x-slot:title>{{ $title }}</x-slot:title>
-     {{-- Pesan sukses dan error --}}
-     @if(session('success'))
-     <div class="alert alert-success">
-         {{ session('success') }}
-     </div>
+    {{-- Pesan sukses dan error --}}
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
     @endif
-  
-    @if(session('error'))
+
+    @if (session('error'))
         <div class="alert alert-danger">
             {{ session('error') }}
         </div>
     @endif
-  
+
     <!-- Container untuk mengatur lebar konten -->
     <div class="container-fluid">
         <!-- Header Section -->
@@ -22,10 +22,17 @@
             </div>
         </div>
     </div>
-  
-    @if($laporan->isEmpty())
+
+    @if ($laporan->isEmpty())
         <p>Tidak ada service yang diajukan.</p>
     @else
+        <div class="d-flex justify-content-end mb-3">
+            <a href="{{ route('laporan.downloadPdf') }}" class="btn btn-success">
+                <i class="bi bi-file-earmark-pdf"></i> Download PDF
+            </a>
+        </div>
+
+
         <table class="table table-striped">
             <thead class="table-dark">
                 <tr>
@@ -45,13 +52,14 @@
                         <td>{{ $ref->user->name }}</td>
                         <td>{{ $ref->service->laptop_model }}</td>
                         <td>{{ $ref->service->problem_description }}</td>
-                        <td>{{ $ref->description}}</td>
+                        <td>{{ $ref->description }}</td>
                         <td>{{ $ref->status->status_name ?? 'Belum Diproses' }}</td>
-                        <td><a href="laporan/{{ $ref->id }}/edit" class="btn btn-primary text-decoration-none">Update Tugas</a>
+                        <td><a href="laporan/{{ $ref->id }}/edit"
+                                class="btn btn-primary text-decoration-none">Update Tugas</a>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     @endif
-  </x-layouts-home>
+</x-layouts-home>

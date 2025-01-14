@@ -53,6 +53,6 @@ class RegisterController extends Controller
         // Debug data untuk memastikan berhasil
         // dd($user);
 
-        return redirect('/login')->with('success', 'User Baru Telah Di Tambahkan');
+        return redirect('/login')->with('success', 'Registrasi akun berhasil');
     }
 }

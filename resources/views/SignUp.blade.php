@@ -25,7 +25,7 @@
         
             <!-- Name -->
             <div class="col-md-4">
-                <label for="name" class="form-label">User Name</label>
+                <label for="name" class="form-label">Full Name</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name" placeholder="User name" value="{{ old('name') }}" required>
                 @error('name')
                     <div class="text-danger">{{ $message }}</div>
