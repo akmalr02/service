@@ -28,7 +28,7 @@
     @else
         <div class="d-flex justify-content-end mb-3">
             <a href="{{ route('laporan.downloadPdf') }}" class="btn btn-success">
-                <i class="bi bi-file-earmark-pdf"></i> Download PDF
+                <i class="bi bi-file-earmark-pdf"></i> Download semua laporan
             </a>
         </div>
 
@@ -55,7 +55,10 @@
                         <td>{{ $ref->description }}</td>
                         <td>{{ $ref->status->status_name ?? 'Belum Diproses' }}</td>
                         <td><a href="laporan/{{ $ref->id }}/edit"
-                                class="btn btn-primary text-decoration-none">Update Tugas</a>
+                                class="btn btn-primary text-decoration-none">Update Tugas</a>                          
+                            <a href="{{ route('laporan.pdfById', ['id' => $ref->id]) }}" class="btn btn-success">
+                                <i class="bi bi-file-earmark-pdf"></i> Cetak laporan
+                            </a>                       
                         </td>
                     </tr>
                 @endforeach

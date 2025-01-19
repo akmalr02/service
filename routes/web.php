@@ -80,7 +80,12 @@ Route::get('tickets', [TicketsController::class, 'index'])->middleware('auth')->
 Route::patch('/tickets/{id}/pay', [TicketsController::class, 'pay'])->name('tickets.pay');
 Route::patch('/tickets/{id}/forward-to-technical', [TicketsController::class, 'forwardToTechnical'])->name('tickets.forwardToTechnical');
 
-Route::get('/laporan/download-pdf', [LaporanController::class, 'downloadPdf'])->name('laporan.downloadPdf');
+Route::middleware('auth')->group(function () {
+    Route::get('/laporan/download-pdf', [LaporanController::class, 'pdfAll'])->name('laporan.downloadPdf');
+    Route::get('/laporan/{id}/pdf', [LaporanController::class, 'pdfById'])->name('laporan.pdfById');
+    Route::get('/laporan/pdfSelesai', [LaporanController::class, 'pdfSelesai'])->name('laporan.pdfSelesai');
+    Route::get('/laporan/pdfPending', [LaporanController::class, 'pdfPending'])->name('laporan.pdfPending');
+});
 
 // route untuk user
 Route::resource('service', ServiceController::class)->except(['index'])->middleware('auth');

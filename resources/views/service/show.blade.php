@@ -15,12 +15,16 @@
               Tiket Details
             </div>
             <div class="card-body">
-              <p class="my-4"><strong>User Name:</strong> {{ $service->user->name }}</p>
-              <p class="my-4"><strong>Adress:</strong> {{ $service->user->address }}</p>
-              <p class="my-4"><strong>No_telpon:</strong> {{ $service->user->phone_number }}</p>
-              <p class="my-4"><strong>Jenis laptop:</strong> {{ $service->laptop_model }}</p>
-              <p class="my-4"><strong>Descripsi:</strong> {{ $service->problem_description }}</p>
-              <a href="{{$service->id }}/edit" class="btn btn-warning text-decoration-none">Ubah Keterangan</a>
+                <p class="my-4"><strong>User Name:</strong> {{ $service->user->name }}</p>
+                <p class="my-4"><strong>Adress:</strong> {{ $service->user->address }}</p>
+                <p class="my-4"><strong>No_telpon:</strong> {{ $service->user->phone_number }}</p>
+                <p class="my-4"><strong>Jenis laptop:</strong> {{ $service->laptop_model }}</p>
+                <p class="my-4"><strong>Descripsi:</strong> {{ $service->problem_description }}</p>
+                @if (optional($service->status)->status_name == 'Payment Pending')
+                        <a href="{{ $service->id }}/edit" class="btn btn-warning text-decoration-none">Ubah Keterangan</a>
+                    @else
+                        <p class="my-4"><strong>Status:</strong> {{ optional($service->status)->status_name }}</p>
+                @endif
             </div>
 
           </div>

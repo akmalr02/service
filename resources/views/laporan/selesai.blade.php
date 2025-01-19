@@ -26,6 +26,11 @@
     @if($laporan->isEmpty())
         <p>Tidak ada service yang selesai.</p>
     @else
+    <div class="d-flex justify-content-end mb-3">
+        <a href="{{ route('laporan.pdfSelesai') }}" class="btn btn-success">
+            <i class="bi bi-file-earmark-pdf"></i> Download laporan selesai
+        </a>
+    </div>
         <table class="table table-striped">
             <thead class="table-dark">
                 <tr>
@@ -48,6 +53,9 @@
                         <td>{{ $ref->description}}</td>
                         <td>{{ $ref->status->status_name ?? 'Belum Diproses' }}</td>
                         <td><a href="{{ $ref->id }}/edit" class="btn btn-primary text-decoration-none">Update Tugas</a>
+                            <a href="{{ route('laporan.pdfById', ['id' => $ref->id]) }}" class="btn btn-success">
+                                <i class="bi bi-file-earmark-pdf"></i> Cetak laporan
+                            </a> 
                         </td>
                     </tr>
                 @endforeach

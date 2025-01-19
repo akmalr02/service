@@ -62,9 +62,15 @@
             <!-- Password -->
             <div class="col-md-4">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password" required>
+                <div class="input-group">
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password" required>
+                    <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
+                        <i id="eyeOpen" class="bi bi-eye" style="display: none;"></i>
+                        <i id="eyeClosed" class="bi bi-eye-slash"></i>
+                    </span>
+                </div>
                 @error('password')
-                    <div class="text-danger">{{ $message }}</div>
+                    <div class="text-danger mt-1">{{ $message }}</div>
                 @enderror
             </div>
         
@@ -80,5 +86,24 @@
             </a>
         </p>
     </div>
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordField = document.getElementById('password');
+            const eyeOpen = document.getElementById('eyeOpen');
+            const eyeClosed = document.getElementById('eyeClosed');
     
+            // Toggle the password field type
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+    
+            // Toggle the visibility of the icons
+            if (type === 'text') {
+                eyeOpen.style.display = 'inline';
+                eyeClosed.style.display = 'none';
+            } else {
+                eyeOpen.style.display = 'none';
+                eyeClosed.style.display = 'inline';
+            }
+        });
+    </script>
 </x-layouts-welcome>

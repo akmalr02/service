@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Laporan;
 use App\Models\Service;
 use App\Models\ServiceStatus;
+use App\Models\User;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use PDF;
@@ -30,7 +31,6 @@ class LaporanController extends Controller
         $title = 'Laporan Selesai';
         $status = ServiceStatus::where('status_name', 'Completed')->first();
 
-        // Memperbaiki query untuk memfilter berdasarkan status melalui relasi
         $laporan = Laporan::with(['service', 'user', 'status'])
             ->whereHas('status', function ($query) use ($status) {
                 $query->where('id', $status->id); // Memfilter berdasarkan ID status
@@ -140,7 +140,7 @@ class LaporanController extends Controller
             $service->update(['is_paid' => 0]);
         }
 
-        return redirect()->route('laporan.index')
+        return redirect()->route('laporan.byTeknisi')
             ->with('success', 'Laporan berhasil ditambahkan.');
     }
 
@@ -200,33 +200,134 @@ class LaporanController extends Controller
             ->with('success', 'Laporan berhasil dihapus.');
     }
 
-    public function downloadPdf()
-{
-    // Ambil data laporan
-    $laporan = Laporan::with(['user', 'service', 'status'])->get();
+    public function pdfAll()
+    {
+        // Ambil data laporan
+        $laporan = Laporan::with(['user', 'service', 'status'])->get();
+        // dd($laporan);
+        $title = "Semua Laporan";
+        // Jalur absolut untuk logo
+        $logoPath = asset('img/logo.png');
 
-    // Jalur absolut untuk logo
-    $logoPath = public_path('img/logo.png');
-    
-    // Generate tampilan HTML untuk PDF
-    $html = view('laporan.pdf', compact('laporan', 'logoPath'))->render();
+        // Generate tampilan HTML untuk PDF
+        $html = view('laporan.pdf', compact('laporan', 'logoPath', 'title'))->render();
 
-    // Set opsi DomPDF
-    $options = new Options();
-    $options->set('defaultFont', 'Arial');
-    $options->set('isHtml5ParserEnabled', true); 
-    $options->set('isRemoteEnabled', true); 
+        // Set opsi DomPDF
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
 
-    $dompdf = new Dompdf($options);
-    $dompdf->loadHtml($html);
-    $dompdf->setPaper('A4', 'portrait'); // Ukuran dan orientasi kertas
-    header('Content-Type: application/pdf');
-    $dompdf->render();
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait'); // Ukuran dan orientasi kertas
+        header('Content-Type: application/pdf');
+        $dompdf->render();
 
-    // Unduh file PDF secara langsung
-    return $dompdf->stream('laporan.pdf', ['Attachment' => true]);
-}
+        // Unduh file PDF secara langsung
+        return $dompdf->stream('Semua laporan.pdf', ['Attachment' => true]);
+    }
+
+    public function pdfById($id)
+    {
+        // Ambil data laporan beserta relasi
+        $laporan = Laporan::with(['user', 'service', 'status'])->findOrFail($id);
+        $title = "Laporan";
+
+        // Jalur absolut untuk logo
+        $logoPath = asset('img/logo.png');
+
+        // Generate tampilan HTML untuk PDF
+        $html = view('laporan.pdfById', compact('laporan', 'logoPath', 'title'))->render();
+
+        // Set opsi DomPDF
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
+
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait'); // Ukuran dan orientasi kertas
+
+        // Render dan unduh PDF
+        $dompdf->render();
+        return $dompdf->stream('laporan.pdf', ['Attachment' => true]);
+    }
 
 
 
+    public function pdfSelesai()
+    {
+        $status = ServiceStatus::where('status_name', 'Completed')->first();
+        $laporan = Laporan::with(['service', 'user', 'status'])
+            ->whereHas('status', function ($query) use ($status) {
+                $query->where('id', $status->id); // Memfilter berdasarkan ID status
+            })
+            ->latest()
+            ->get();
+
+        // dd($laporan);
+        $title = "Laporan selesai";
+
+        // Jalur absolut untuk logo
+        $logoPath = asset('img/logo.png');
+
+        // Generate tampilan HTML untuk PDF
+        $html = view('laporan.pdf', compact('laporan', 'logoPath', 'title'))->render();
+
+        // Set opsi DomPDF
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
+
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait'); // Ukuran dan orientasi kertas
+
+        // Render dan unduh PDF
+        $dompdf->render();
+        return $dompdf->stream('Laporan selesai.pdf', ['Attachment' => true]);
+    }
+
+    public function pdfPending()
+    {
+        // dd("pending");
+        $status = ServiceStatus::where('status_name', 'Penambahan')->first();
+        $laporan = Laporan::with(['service', 'user', 'status'])
+            ->whereHas('status', function ($query) use ($status) {
+                $query->where('id', $status->id); // Memfilter berdasarkan ID status
+            })
+            ->latest()
+            ->get();
+
+        // dd($laporan);
+        $title = "Laporan penambahan";
+
+        // Jalur absolut untuk logo
+        $logoPath = asset('img/logo.png');
+
+        // Generate tampilan HTML untuk PDF
+        $html = view('laporan.pdf', compact('laporan', 'logoPath', 'title'))->render();
+
+        // Set opsi DomPDF
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
+
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait'); // Ukuran dan orientasi kertas
+
+        // Render dan unduh PDF
+        $dompdf->render();
+        return $dompdf->stream('Laporan penambahan.pdf', ['Attachment' => true]);
+    }
+
+    // public function pdfById()
+    // {
+    //     dd('berhasil');
+    // }
 }

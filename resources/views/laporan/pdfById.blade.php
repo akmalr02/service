@@ -75,9 +75,8 @@
     <table>
         <thead>
             <tr>
-                <th>No</th>
-                <th>Nama Teknisi</th>
                 <th>Nama User</th>
+                <th>Nama Teknisi</th>
                 <th>Model Laptop</th>
                 <th>Status</th>
                 <th>Deskripsi</th>
@@ -85,17 +84,14 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($laporan as $index => $log)
-                <tr>
-                    <td style="text-align: center;">{{ $index + 1 }}</td>
-                    <td>{{ optional($log->technician)->name ?? '-' }}</td>
-                    <td>{{ optional($log->user)->name ?? '-' }}</td>
-                    <td>{{ optional($log->service)->laptop_model ?? '-' }}</td>
-                    <td style="text-align: center;">{{ optional($log->status)->status_name ?? '-' }}</td>
-                    <td>{{ $log->description ?? '-' }}</td>
-                    <td>{{ optional($log->service)->created_at ? $log->service->created_at->format('H:i:s d-m-Y') : '-' }}</td>
-                </tr>
-            @endforeach
+          <tr>
+            <td>{{ $laporan->user->name }}</td>
+            <td>{{ $laporan->technician->name ?? '-' }}</td>
+            <td>{{ $laporan->service->laptop_model ?? '-' }}</td>
+            <td>{{ $laporan->service->status->status_name ?? '-' }}</td>
+            <td>{{ $laporan->description ?? '-' }}</td>
+            <td>{{ $laporan->created_at }}</td>
+          </tr>
         </tbody>
     </table>
 

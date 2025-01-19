@@ -31,16 +31,28 @@
                 <!-- Form Login -->
                 <form action="/login" method="POST">
                     @csrf
+
+                     <!-- Email -->
                     <div class="mb-3">
                         <label for="email" class="form-label">E-mail</label>
                         <input type="email" class="form-control" id="email" name="email"
                             placeholder="Enter your E-mail" required value="{{ old('email') }}" autocomplete="email">
                     </div>
-                    <div class="mb-3">
+
+                    <!-- Password -->
+                    <div class="mb-3 position-relative">
                         <label for="password" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="password" name="password"
-                            placeholder="Enter your Password" required autocomplete="current-password">
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" name="password"
+                                placeholder="Enter your Password" required autocomplete="current-password">
+                            <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
+                                <i id="eyeOpen" class="bi bi-eye" style="display: none;"></i>
+                                <i id="eyeClosed" class="bi bi-eye-slash"></i>
+                            </span>
+                        </div>
                     </div>
+                    
+                     <!-- tombol sigin -->
                     <button type="submit" class="btn btn-primary w-100 my-4">
                         <i class="bi bi-box-arrow-in-right"></i> Sign in
                     </button>
@@ -57,4 +69,24 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('togglePassword').addEventListener('click', function () {
+            const passwordField = document.getElementById('password');
+            const eyeOpen = document.getElementById('eyeOpen');
+            const eyeClosed = document.getElementById('eyeClosed');
+    
+            // Toggle the password field type
+            const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordField.setAttribute('type', type);
+    
+            // Toggle the visibility of the icons
+            if (type === 'text') {
+                eyeOpen.style.display = 'inline';
+                eyeClosed.style.display = 'none';
+            } else {
+                eyeOpen.style.display = 'none';
+                eyeClosed.style.display = 'inline';
+            }
+        });
+    </script>
 </x-layouts-welcome>

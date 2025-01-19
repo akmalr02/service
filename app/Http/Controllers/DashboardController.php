@@ -43,7 +43,7 @@ class DashboardController extends Controller
     public function about()
     {
         $title = 'about';
-       
+
         return view('about', [
             'title' => $title,
         ]);
@@ -52,11 +52,9 @@ class DashboardController extends Controller
     public function more()
     {
         $title = 'more';
-       
+
         return view('more', [
             'title' => $title,
         ]);
     }
-
-
 }
