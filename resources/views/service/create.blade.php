@@ -9,24 +9,26 @@
             <a href="{{ url('/homeAuth') }}" class="btn btn-dark align-items-center mt-2">
                 <i class="bi bi-backspace-fill me-2"></i> Back
             </a>
-            
+
         </div>
         {{-- form input --}}
         <form class="row g-3" method="post" action={{ route('service.store') }} enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="laptop_model" class="form-label">Model laptop</label>
-                <input type="text" class="form-control" name="laptop_model" id="laptop_model" placeholder="Model laptop" required>
-              </div>
-              <div class="mb-3">
-                <label for="problem_description" class="form-label">Problem description</label>
-                <textarea class="form-control" id="problem_description" name="problem_description" rows="3" placeholder="Problem description" required></textarea>
-              </div>
+                <input type="text" class="form-control" name="laptop_model" id="laptop_model"
+                    placeholder="Model laptop" required>
+            </div>
+            <div class="mb-3">
+                <label for="problem_description" class="form-label">Deskripsi masalah</label>
+                <textarea class="form-control" id="problem_description" name="problem_description" rows="3"
+                    placeholder="deskripsi masalah" required></textarea>
+            </div>
             <!-- submit form -->
             <div class="col-12">
                 <button class="btn btn-primary" type="submit">Submit form</button>
             </div>
         </form>
-        
+
 
 </x-layouts-home>

@@ -12,7 +12,7 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
                     <a class="nav-link text-dark" href="/login">
-                        <i class="bi bi-box-arrow-in-right"></i> Sign in
+                        <i class="bi bi-box-arrow-in-right"></i> Login
                     </a>
                 </li>
             </ul>

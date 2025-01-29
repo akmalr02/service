@@ -255,6 +255,43 @@ class LaporanController extends Controller
         return $dompdf->stream('laporan.pdf', ['Attachment' => true]);
     }
 
+    public function pdfByUser()
+    {
+        // Ambil ID user yang sedang login
+        $userId = Auth::id();
+
+        // Ambil data laporan terkait user
+        $laporan = Laporan::with(['service', 'user', 'status'])
+            ->whereHas('user', function ($query) use ($userId) {
+                $query->where('id', $userId);
+            })
+            ->latest()
+            ->get();
+
+        // Judul laporan
+        $title = "Laporan User";
+
+        // Path absolut untuk logo
+        $logoPath = asset('img/logo.png');
+
+        // Generate tampilan HTML untuk PDF
+        $html = view('laporan.pdf', compact('laporan', 'logoPath', 'title'))->render();
+
+        // Konfigurasi opsi DomPDF
+        $options = new Options();
+        $options->set('defaultFont', 'Arial');
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
+
+        // Buat instance DomPDF
+        $dompdf = new Dompdf($options);
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait'); // Atur ukuran dan orientasi kertas
+
+        // Render PDF dan unduh
+        $dompdf->render();
+        return $dompdf->stream('Laporan_User.pdf', ['Attachment' => true]);
+    }
 
 
     public function pdfSelesai()

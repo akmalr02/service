@@ -85,6 +85,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/laporan/{id}/pdf', [LaporanController::class, 'pdfById'])->name('laporan.pdfById');
     Route::get('/laporan/pdfSelesai', [LaporanController::class, 'pdfSelesai'])->name('laporan.pdfSelesai');
     Route::get('/laporan/pdfPending', [LaporanController::class, 'pdfPending'])->name('laporan.pdfPending');
+    Route::get('/laporan/user', [LaporanController::class, 'pdfByUSer'])->name('laporan.pdfUser');
 });
 
 // route untuk user

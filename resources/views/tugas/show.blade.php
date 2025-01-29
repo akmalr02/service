@@ -24,29 +24,29 @@
             <a href="{{ url('/tugas') }}" class="btn btn-dark align-items-center mt-2">
                 <i class="bi bi-backspace-fill me-2"></i> Back
             </a>
-            
+
         </div>
         {{-- Daftar Tugas --}}
         <ul class="list-group">
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              Nama pengguna :
-              <span class="badge text-bg-primary rounded-pill">{{ $service->user->name }}</span>
+                Nama pengguna :
+                <span class="badge text-bg-primary rounded-pill">{{ $service->user->name }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              Laptop model :
-              <span class="badge text-bg-primary rounded-pill">{{ $service->laptop_model }}</span>
+                Laptop model :
+                <span class="badge text-bg-primary rounded-pill">{{ $service->laptop_model }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              Descripsi :
-              <span class="badge text-bg-primary rounded-pill">{{ $service->problem_description }}</span>
+                Deskripsi masalah :
+                <span class="badge text-bg-primary rounded-pill">{{ $service->problem_description }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              Alamat :
-              <span class="badge text-bg-primary rounded-pill">{{ $service->user->address }}</span>
+                Alamat :
+                <span class="badge text-bg-primary rounded-pill">{{ $service->user->address }}</span>
             </li>
             <li class="list-group-item d-flex justify-content-between align-items-center">
-              Status :
-              <span class="badge text-bg-primary rounded-pill">{{ ucfirst($service->status_tugas) }}</span>
+                Status :
+                <span class="badge text-bg-primary rounded-pill">{{ ucfirst($service->status_tugas) }}</span>
             </li>
             <form action="{{ route('tugas.take', $service->id) }}" method="POST">
                 @csrf
@@ -54,6 +54,6 @@
                     Ambil Tugas
                 </button>
             </form>
-          </ul>
+        </ul>
     </div>
 </x-layouts-home>

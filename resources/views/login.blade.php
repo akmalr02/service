@@ -18,7 +18,7 @@
         <div class="circle circle2"></div>
         <div class="container d-flex justify-content-center align-items-center">
             <div class="card shadow-lg p-4" style="width: 100%; max-width: 400px; border-radius: 15px;">
-                <h1 class="text-center mb-4">Sign In</h1>
+                <h1 class="text-center mb-4">Login</h1>
 
                 <!-- Notifikasi Error -->
                 @if (session('signInError'))
@@ -32,7 +32,7 @@
                 <form action="/login" method="POST">
                     @csrf
 
-                     <!-- Email -->
+                    <!-- Email -->
                     <div class="mb-3">
                         <label for="email" class="form-label">E-mail</label>
                         <input type="email" class="form-control" id="email" name="email"
@@ -51,10 +51,10 @@
                             </span>
                         </div>
                     </div>
-                    
-                     <!-- tombol sigin -->
+
+                    <!-- tombol sigin -->
                     <button type="submit" class="btn btn-primary w-100 my-4">
-                        <i class="bi bi-box-arrow-in-right"></i> Sign in
+                        <i class="bi bi-box-arrow-in-right"></i> Login
                     </button>
                 </form>
 
@@ -62,7 +62,7 @@
                 <p class="text-center">
                     Belum punya akun? Silakan
                     <a href="/registrasi" class="d-inline-block mt-2">
-                        Daftar Akun
+                        Register
                     </a>
                 </p>
 
@@ -70,15 +70,15 @@
         </div>
     </div>
     <script>
-        document.getElementById('togglePassword').addEventListener('click', function () {
+        document.getElementById('togglePassword').addEventListener('click', function() {
             const passwordField = document.getElementById('password');
             const eyeOpen = document.getElementById('eyeOpen');
             const eyeClosed = document.getElementById('eyeClosed');
-    
+
             // Toggle the password field type
             const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordField.setAttribute('type', type);
-    
+
             // Toggle the visibility of the icons
             if (type === 'text') {
                 eyeOpen.style.display = 'inline';
