@@ -27,7 +27,7 @@
             <div class="col-md-4">
                 <label for="name" class="form-label">Nama Lengkap</label>
                 <input type="text" class="form-control @error('name') is-invalid @enderror" id="name"
-                    name="name" placeholder="Nama" value="{{ old('name') }}" required>
+                    name="name" placeholder="Nama" value="{{ old('name') }}">
                 @error('name')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -37,7 +37,7 @@
             <div class="col-md-4">
                 <label for="email" class="form-label">E-mail</label>
                 <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
-                    name="email" placeholder="E-mail" value="{{ old('email') }}" required>
+                    name="email" placeholder="E-mail" value="{{ old('email') }}">
                 @error('email')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -49,7 +49,7 @@
                 <input type="tel" inputmode="numeric" pattern="\d{11,13}" maxlength="15"
                     class="form-control @error('phone_number') is-invalid @enderror" id="phone_number"
                     name="phone_number" placeholder="Nomor Telepon (11-13 digit)" value="{{ old('phone_number') }}"
-                    required aria-describedby="phoneHelp">
+                    aria-describedby="phoneHelp">
                 <small id="phoneHelp" class="form-text text-muted"></small>
                 @error('phone_number')
                     <div class="text-danger">{{ $message }}</div>
@@ -61,7 +61,7 @@
             <div class="col-md-6">
                 <label for="address" class="form-label">Alamat</label>
                 <input type="text" class="form-control @error('address') is-invalid @enderror" id="address"
-                    name="address" placeholder="Alamat" value="{{ old('address') }}" required>
+                    name="address" placeholder="Alamat" value="{{ old('address') }}">
                 @error('address')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
@@ -72,7 +72,7 @@
                 <label for="password" class="form-label">Password</label>
                 <div class="input-group">
                     <input type="password" class="form-control @error('password') is-invalid @enderror" id="password"
-                        name="password" placeholder="Password" required>
+                        name="password" placeholder="Password">
                     <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
                         <i id="eyeOpen" class="bi bi-eye" style="display: none;"></i>
                         <i id="eyeClosed" class="bi bi-eye-slash"></i>
@@ -115,4 +115,50 @@
             }
         });
     </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector("form").addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                let isValid = true;
+                let inputs = document.querySelectorAll("input, textarea, select");
+
+                inputs.forEach(input => {
+                    let errorDiv = input.parentNode.querySelector(".text-danger");
+
+                    if (errorDiv) {
+                        errorDiv.remove();
+                    }
+
+                    if (input.value.trim() === "") {
+                        input.classList.add("is-invalid");
+
+                        let errorMessage = document.createElement("div");
+                        errorMessage.classList.add("text-danger", "mt-1");
+                        errorMessage.innerText = "Field ini tidak boleh kosong!";
+                        input.parentNode.appendChild(errorMessage);
+
+                        isValid = false;
+                    } else {
+                        input.classList.remove("is-invalid");
+                    }
+
+                    // Hapus pesan error saat input diisi
+                    input.addEventListener("input", function() {
+                        if (input.value.trim() !== "") {
+                            input.classList.remove("is-invalid");
+                            if (errorDiv) {
+                                errorDiv.remove();
+                            }
+                        }
+                    });
+                });
+
+                if (isValid) {
+                    this.submit();
+                }
+            });
+        });
+    </script>
+
 </x-layouts-welcome>

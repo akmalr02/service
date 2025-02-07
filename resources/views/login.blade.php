@@ -14,6 +14,7 @@
                 {{ session('error') }}
             </div>
         @endif
+
         <div class="circle circle1"></div>
         <div class="circle circle2"></div>
         <div class="container d-flex justify-content-center align-items-center">
@@ -36,7 +37,7 @@
                     <div class="mb-3">
                         <label for="email" class="form-label">E-mail</label>
                         <input type="email" class="form-control" id="email" name="email"
-                            placeholder="Enter your E-mail" required value="{{ old('email') }}" autocomplete="email">
+                            placeholder="Enter your E-mail" value="{{ old('email') }}" autocomplete="email">
                     </div>
 
                     <!-- Password -->
@@ -44,7 +45,7 @@
                         <label for="password" class="form-label">Password</label>
                         <div class="input-group">
                             <input type="password" class="form-control" id="password" name="password"
-                                placeholder="Enter your Password" required autocomplete="current-password">
+                                placeholder="Enter your Password" autocomplete="current-password">
                             <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
                                 <i id="eyeOpen" class="bi bi-eye" style="display: none;"></i>
                                 <i id="eyeClosed" class="bi bi-eye-slash"></i>
@@ -87,6 +88,51 @@
                 eyeOpen.style.display = 'none';
                 eyeClosed.style.display = 'inline';
             }
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelector("form").addEventListener("submit", function(event) {
+                event.preventDefault();
+
+                let isValid = true;
+                let inputs = document.querySelectorAll("input, textarea, select");
+
+                inputs.forEach(input => {
+                    let errorDiv = input.parentNode.querySelector(".text-danger");
+
+                    if (errorDiv) {
+                        errorDiv.remove();
+                    }
+
+                    if (input.value.trim() === "") {
+                        input.classList.add("is-invalid");
+
+                        let errorMessage = document.createElement("div");
+                        errorMessage.classList.add("text-danger", "mt-1");
+                        errorMessage.innerText = "Field ini tidak boleh kosong!";
+                        input.parentNode.appendChild(errorMessage);
+
+                        isValid = false;
+                    } else {
+                        input.classList.remove("is-invalid");
+                    }
+
+                    // Hapus pesan error saat input diisi
+                    input.addEventListener("input", function() {
+                        if (input.value.trim() !== "") {
+                            input.classList.remove("is-invalid");
+                            if (errorDiv) {
+                                errorDiv.remove();
+                            }
+                        }
+                    });
+                });
+
+                if (isValid) {
+                    this.submit();
+                }
+            });
         });
     </script>
 </x-layouts-welcome>

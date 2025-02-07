@@ -96,8 +96,7 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        // dd('halaman update');
-        // $user = User::findOrFail($id);
+
         $rules = [
             'name' => 'required|max:255',
             'email' => 'required|unique:users,email',

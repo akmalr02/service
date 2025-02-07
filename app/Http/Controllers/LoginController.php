@@ -17,7 +17,7 @@ class LoginController extends Controller
     }
 
     public function authenticate(Request $request)
-{
+    {
     // Validasi input
     $request->validate([
         'email' => 'required|email',
@@ -53,10 +53,7 @@ class LoginController extends Controller
 
     // Jika autentikasi gagal
     return back()->with('error', 'Password yang Anda masukkan salah.');
-}
-
-
-
+    }
 
     public function logout(Request $request)
     {
