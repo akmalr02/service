@@ -36,7 +36,7 @@
                                 {{ ucfirst($service->status_tugas) }}
                             </h6>
                             <p class="card-text">{{ $service->problem_description }}</p>
-                            <a href="tugas/{{ $service->id }}" class="btn btn-primary text-decoration-none">View Tugas</a>
+                            <a href="tugas/{{ $service->id }}" class="btn btn-primary text-decoration-none">View Tiket</a>
 
                         </div>
                     </div>

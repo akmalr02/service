@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('laptop_model');
             $table->string('problem_description');
             $table->foreignId('status_id');
+            $table->string('payment_image')->nullable();
+            $table->string('payment_tambah')->nullable();
             $table->boolean('is_paid')->default(false);
             $table->enum('status_tugas', ['available', 'taken'])->default('available');
             $table->foreignId('technician_id')->nullable()->constrained('users');

@@ -362,9 +362,4 @@ class LaporanController extends Controller
         $dompdf->render();
         return $dompdf->stream('Laporan penambahan.pdf', ['Attachment' => true]);
     }
-
-    // public function pdfById()
-    // {
-    //     dd('berhasil');
-    // }
 }

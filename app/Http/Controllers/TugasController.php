@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Service;
 use App\Models\ServiceStatus;
 use Illuminate\Http\Request;
+use App\Models\laporan;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class TugasController extends Controller
@@ -35,21 +37,28 @@ class TugasController extends Controller
     {
         $title = 'Daftar Service User';
         $service = Service::find($id);
+        $technicians = User::where('role', 'teknisi')->get();
+        $laporan = Laporan::where('service_id', $service->id)
+            ->with('technician') // Relasi teknisi
+            ->first();
+
+        // dd($laporan);
 
         return view('tugas.show', [
             'title' => $title,
-            'service' => $service
+            'service' => $service,
+            'laporan' => $laporan,
+            'technicians' => $technicians
         ]);
-        // dd($service);
     }
 
-    public function takeTask($id)
+    public function takeTask(Request $request, $id)
     {
         // Mencari service berdasarkan ID
         $service = Service::findOrFail($id);
 
-        // Memastikan pengguna yang sedang login adalah teknisi
-        if (Auth::user()->role == 'teknisi') {
+        // Memastikan pengguna adalah teknisi atau admin
+        if (Auth::user()->role == 'admin' || Auth::user()->role == 'teknisi') {
             // Cari ID status "In Progress"
             $inProgressStatus = ServiceStatus::where('status_name', 'In Progress')->first();
 
@@ -58,17 +67,20 @@ class TugasController extends Controller
                 return redirect()->route('tugas.index')->with('error', 'Status "In Progress" tidak ditemukan.');
             }
 
+            // Tentukan teknisi yang akan menangani tugas
+            $technicianId = $service->technician_id ?? $request->technician_id;
+
             // Perbarui data tugas
             $service->update([
                 'status_tugas' => 'taken',
                 'status_id' => $inProgressStatus->id,
-                'technician_id' => Auth::id(),
+                'technician_id' => $technicianId,
             ]);
 
-            return redirect()->route('tugas.index')->with('success', 'Tugas berhasil diambil.');
+            return redirect()->route('tugas.index')->with('success', 'Tugas berhasil diserahkan ke teknisi.');
         }
 
-        return redirect()->route('tugas.index')->with('error', 'Anda tidak memiliki izin untuk mengambil tugas ini.');
+        return redirect()->route('tugas.index')->with('error', 'Anda tidak memiliki izin untuk menyerahkan tugas ini.');
     }
 
     public function endTask($id)

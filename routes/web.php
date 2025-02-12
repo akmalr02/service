@@ -11,6 +11,7 @@ use App\Http\Controllers\TicketsController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AbsensiController;
+use App\Http\Controllers\PaymentController;
 
 
 Route::get('/', function () {
@@ -91,3 +92,5 @@ Route::middleware('auth')->group(function () {
 // route untuk user
 Route::resource('service', ServiceController::class)->except(['index'])->middleware('auth');
 Route::post('/service/{id}/cancel', [ServiceController::class, 'cancelPayment'])->name('service.cancel');
+Route::post('/service/{id}/upload-payment', [PaymentController::class, 'uploadPayment'])->name('upload.payment');
+Route::post('/service/{id}/upload-tambah', [PaymentController::class, 'uploadTambah'])->name('upload.tambah');

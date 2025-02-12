@@ -33,8 +33,8 @@ class ServiceSeeder extends Seeder
                 'user_id' => $user->id,
                 'laptop_model' => 'Laptop Model ' . Str::random(3),
                 'problem_description' => 'Masalah dengan laptop ' . Str::random(5),
-                'status_id' => $statuses->random()->id,
-                'is_paid' => (bool) rand(0, 1),
+                'status_id' => 1,
+                'is_paid' => 0,
             ]);
         }
 

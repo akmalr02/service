@@ -3,7 +3,7 @@
         <!-- Logo -->
         <a class="navbar-brand" href="{{ Auth::check() && Auth::user()->role === 'admin' 
                 ? route('homeAdmin') 
-                : (Auth::user()->role === 'teknisi' ? route('tugas.index') 
+                : (Auth::user()->role === 'teknisi' ? route('progres.index') 
                 : (Auth::user()->role === 'user' ? route('homeAuth') : route('login'))) }}">
             <img src="{{ asset('img/logo.png') }}" alt="Logo" width="250" height="70" class="d-inline-block align-text-top">
         </a>
@@ -21,6 +21,9 @@
                     @if(Auth::user()->role === 'admin')
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('user') ? 'active' : '' }}" href="{{url('user') }}">Pengelola User</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ Request::is('user') ? 'active' : '' }}" href="{{url('tugas') }}">Pengelola Tiket</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('absensi') ? 'active' : '' }}" href="{{url('absensi') }}">Absen Teknisi</a>
@@ -43,9 +46,9 @@
                             </ul>
                         </li>
                     @elseif(Auth::user()->role === 'teknisi')
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a class="nav-link {{ Request::is('tasks') ? 'active' : '' }}" href="{{url('progres') }}">Tugas Saya</a>
-                        </li>
+                        </li> --}}
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('/laporan/byTeknisi') ? 'active' : '' }}" href="{{url('/laporan/byTeknisi') }}">laporan saya</a>
                         </li>
